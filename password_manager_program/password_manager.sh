@@ -11,15 +11,19 @@ encrypt_password(){
     echo "Input the encryption hex number (WRITE THIS DOWN)"
     read -s key
 
+    echo "Please select a file to write the password to (default not saved to file)"
+    read file_name
 
     encrypted_password=$((0x$hex_password * 0x$key))   
 
-    printf "%x\n" "$encrypted_password"
+    #printf "%x\n" "$encrypted_password"
 
-    echo "$encrypted_password" >> password.txt
-
-    echo "Encrypted password stored to file password.txt"
-
+    if [ -z $file_name ]; then
+        echo "$encrypted_password"
+    else
+        echo "$encrypted_password" >> $file_name
+        echo "Encrypted password stored to file $file_name"
+    fi
 }
 
 decrypt_passwords(){
